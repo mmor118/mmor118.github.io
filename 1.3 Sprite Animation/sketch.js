@@ -1,17 +1,21 @@
-let spriteSheet;
+let spelunkySprite;
+let greenGirlSprite;
 let characters = [];
-const numCharacters = 5; 
+const numCharacters = 6; 
 const frameRateSpeed = 60; 
 const movementSpeed = 2.5; 
 
 function preload() {
-  spriteSheet = loadImage('SpelunkyGuy.png'); 
+  spelunkySprite = loadImage('SpelunkyGuy.png'); 
+  greenGirlSprite = loadImage('GreenGirl.png'); 
 }
 
 function setup() {
   createCanvas(800, 400);
   for (let i = 0; i < numCharacters; i++) {
-    characters.push(new AnimatedCharacter(random(width), height - 80, spriteSheet));
+  
+    let spriteChoice = random() < 0.5 ? spelunkySprite : greenGirlSprite;
+    characters.push(new AnimatedCharacter(random(width), height - 80, spriteChoice));
   }
   frameRate(frameRateSpeed);
 }
@@ -35,7 +39,7 @@ function draw() {
 class AnimatedCharacter {
   constructor(x, y, spriteSheet) {
     this.x = x;
-    this.y = y + 7;
+    this.y = y + 7; 
     this.spriteSheet = spriteSheet;
     this.frameIndex = 0;
     this.frameCounter = 0;
@@ -49,7 +53,6 @@ class AnimatedCharacter {
       this.direction = moveDirection;
       this.frameCounter++;
 
-    
       if (this.frameCounter >= frameRateSpeed / 15) { 
         this.frameCounter = 0;
         this.frameIndex = (this.frameIndex + 1) % this.walkFrames.length;
@@ -65,13 +68,11 @@ class AnimatedCharacter {
     let frameX = this.walkFrames[this.frameIndex] * 80; 
 
     if (this.direction === 1) {
-      
       image(this.spriteSheet, this.x, this.y, 80, 80, frameX, 0, 80, 80);
     } else {
-      
       push();
-      translate(this.x, this.y); 
-      scale(-1, 1); 
+      translate(this.x, this.y);
+      scale(-1, 1);
       image(this.spriteSheet, -80, 0, 80, 80, frameX, 0, 80, 80);
       pop();
     }
