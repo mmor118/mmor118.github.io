@@ -33,68 +33,59 @@ function draw() {
 
 function mousePressed() {
   // Ensure Tone.js audio context is started
-  if (Tone.context.state !== 'running') {
-    Tone.start();
-    console.log("Audio context started");
-  }
+  Tone.start().then(() => {
+    console.log("Tone.js audio context started!");
+    triggerGunSound();
+  }).catch((err) => {
+    console.error("Error starting Tone.js:", err);
+  });
 
   showGun = true;
   gunTimer = millis();
-  triggerGunSound();
 }
 
 // Tone.js Sound Design
-let noise, filter, osc, ampEnv, lfo, impactOsc, reverb;
+let noise, filter, osc, ampEnv, impactOsc, reverb, impactEnv, oscEnv;
 
 function setupGunSound() {
   // White noise burst for the explosion
-  noise = new Tone.Noise("white").start();
+  noise = new Tone.Noise("white"); // No `.start()`, we trigger it dynamically
   noise.volume.value = -5;
 
-  // Low-pass filter to make the noise sound more punchy
-  filter = new Tone.Filter(600, "lowpass").toDestination();
+  // Low-pass filter to shape the noise burst
+  filter = new Tone.Filter(1000, "lowpass").toDestination();
 
-  // Amplitude envelope to shape the noise burst
+  // Envelope to shape the noise burst
   ampEnv = new Tone.AmplitudeEnvelope({
-    attack: 0.005,  // Fast attack for a sharp burst
-    decay: 0.1,     // Short decay for a quick bang
+    attack: 0.005, 
+    decay: 0.1,
     sustain: 0,
-    release: 0.05   // Quick fade-out
+    release: 0.05
   }).connect(filter);
 
   noise.connect(ampEnv);
 
-  // Oscillator for the gun "thump" (low bass kick)
-  impactOsc = new Tone.Oscillator(80, "sine").start();
+  // Oscillator for deep gunshot thump
+  impactOsc = new Tone.Oscillator(80, "sine"); // No `.start()`, triggered later
   impactOsc.volume.value = -10;
 
-  // Envelope to make the impact have a quick thud
-  let impactEnv = new Tone.AmplitudeEnvelope({
+  impactEnv = new Tone.AmplitudeEnvelope({
     attack: 0.005,
     decay: 0.1,
     sustain: 0,
     release: 0.1
   }).toDestination();
-  
+
   impactOsc.connect(impactEnv);
 
-  // LFO to add slight pitch modulation for realism
-  lfo = new Tone.LFO(50, 500, 800); // Sweep the filter dynamically
-  lfo.connect(filter.frequency);
-  lfo.start();
-
-  // Add reverb for realism
-  reverb = new Tone.Reverb(0.5).toDestination();
-  filter.connect(reverb);
-
-  // Higher-frequency oscillator sweep for sharpness
+  // Higher-pitched oscillator for the sharp crack
   osc = new Tone.Oscillator({
     frequency: 1000,
-    type: "sawtooth",
-  }).start();
+    type: "sawtooth"
+  });
 
-  // Quick frequency drop to simulate a crack sound
-  let oscEnv = new Tone.FrequencyEnvelope({
+  // Quick pitch drop for a realistic effect
+  oscEnv = new Tone.FrequencyEnvelope({
     attack: 0.005,
     decay: 0.07,
     sustain: 0,
@@ -105,9 +96,29 @@ function setupGunSound() {
 
   oscEnv.connect(osc.frequency);
   osc.connect(ampEnv);
+
+  // Add reverb for realism
+  reverb = new Tone.Reverb(0.4).toDestination();
+  filter.connect(reverb);
 }
 
 function triggerGunSound() {
+  // Start noise burst
+  noise.start();
   ampEnv.triggerAttackRelease(0.1);
-  impactOsc.triggerAttackRelease(0.1);
+
+  // Start impact (bass thump)
+  impactOsc.start();
+  impactEnv.triggerAttackRelease(0.1);
+
+  // Start crack (oscillator)
+  osc.start();
+  oscEnv.triggerAttackRelease(0.1);
+
+  // Stop noise & oscillators after a short time (prevents unwanted continuous sound)
+  setTimeout(() => {
+    noise.stop();
+    impactOsc.stop();
+    osc.stop();
+  }, 200);
 }
