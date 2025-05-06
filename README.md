@@ -44,5 +44,4 @@ Project Outline:
  One instrument parameter is modulated (e.g. envelope)
  -----------------------------------------------------------------------------------------
  Wiring Diagram:
- ![Playing the Game](images/wiringdiagram.jpg)
  <img src="images/wiringdiagram.jpg" alt="Me playing the game" width="400">
