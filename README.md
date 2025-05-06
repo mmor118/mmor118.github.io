@@ -43,7 +43,7 @@ Project Outline:
 
  One instrument parameter is modulated (e.g. envelope)
 
- ## Wiring Diagram:
+ Wiring Diagram:
  -----------------------------------------------------------------------------------------
 
 ![Wiring Diagram](Images/Wiring Diagram.png)
@@ -76,7 +76,7 @@ Links:
 -----------------------------------------------------------------------------------------
 Video Example of Project:
 
-https://www.youtube.com/shorts/Rcnc3Qu0-SE
+https://youtu.be/Vh5QcbYxLaA
 
 Files For the project:
 
