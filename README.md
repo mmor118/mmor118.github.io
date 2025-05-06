@@ -42,11 +42,13 @@ Project Outline:
  At least 3 instruments (synths), and 2 effects (delay, volume)
 
  One instrument parameter is modulated (e.g. envelope)
+ 
 
  Wiring Diagram:
  -----------------------------------------------------------------------------------------
 
 ![Wiring Diagram](Images/Wiring Diagram.png)
+
 
 Future Development:
 -----------------------------------------------------------------------------------------
