@@ -42,7 +42,38 @@ Project Outline:
  At least 3 instruments (synths), and 2 effects (delay, volume)
 
  One instrument parameter is modulated (e.g. envelope)
+
+ ## Wiring Diagram:
  -----------------------------------------------------------------------------------------
-## Wiring Diagram:
 
 ![Wiring Diagram](Images/Wiring Diagram.png)
+
+Future Development:
+-----------------------------------------------------------------------------------------
+
+In the future, several features could be added to enhance gameplay and challenge:
+
+
+Level Progression: Introduce multiple levels that gradually increase in difficulty as the player survives longer or scores higher. Each level could modify variables like fruit speed, spawn rate, or number of falling objects.
+
+Difficulty Scaling: Implement a dynamic difficulty scaler that increases game speed or complexity based on the player's score, making the game more engaging and competitive over time.
+
+More Falling Objects: Expand the variety of falling items beyond just fruit and bombs. For example:
+
+-Power-ups that give bonus points or temporary shields.
+
+-Rotten fruit that subtracts points.
+
+-Special collectibles that unlock bonus levels or effects.
+
+Images of the Project:
+-----------------------------------------------------------------------------------------
+![Project Pic1](Images/Project Pic1.png)
+![Project Pic2](Images/Project Pic2.png)
+![Project Pic3](Images/Project Pic3.png)
+
+Links:
+-----------------------------------------------------------------------------------------
+Video Example of Project:
+https://www.youtube.com/shorts/Rcnc3Qu0-SE
+Files For the project:
